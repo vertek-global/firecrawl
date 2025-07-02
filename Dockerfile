@@ -1,20 +1,21 @@
 FROM node:20-alpine
 
+# Global setup
 WORKDIR /app
-
-# Copy package files
 COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
-
-# Install pnpm (your local version)
 RUN npm install -g pnpm@10.12.4
 
-# Install dependencies, including devDependencies
-RUN pnpm install --config.lockfile=true --config.lockfileOnly=false
+# Set working directory to actual app location
+WORKDIR /app/apps/api
 
-# Copy the rest of the code
+# Install dependencies in the correct context
+RUN pnpm install
+
+# Copy all source code AFTER install to cache dependencies
+WORKDIR /app
 COPY . .
 
-# Build backend
+# Back to app dir for build
 WORKDIR /app/apps/api
 RUN pnpm run build
 
