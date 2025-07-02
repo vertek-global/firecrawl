@@ -11,7 +11,7 @@ RUN npm install -g pnpm
 COPY apps/api/package.json apps/api/pnpm-lock.yaml* ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --include-dev
 
 # Copy the full backend source code
 COPY apps/api ./apps/api
