@@ -1,24 +1,27 @@
-FROM node:18-alpine
+# Use Node 20 base image
+FROM node:20-alpine
 
+# Set working directory inside container
 WORKDIR /app
 
-# Install pnpm globally
+# Install global dependencies
 RUN npm install -g pnpm
 
-# Copy only package files needed for install
-COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
+# Copy only the package files first to leverage Docker cache
+COPY apps/api/package.json apps/api/pnpm-lock.yaml* ./
 
-# Install dependencies only for api
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
+# Copy the full backend source code
 COPY apps/api ./apps/api
 
-# Build api project (adjust build script if needed)
-RUN pnpm --filter @firecrawl/api build
+# Build the backend (runs tsc compiler)
+RUN pnpm --filter firecrawl-scraper-js build
 
-# Expose port 3002
+# Expose port Firecrawl listens on
+ENV PORT=3002
 EXPOSE 3002
 
-# Start the api in production mode
-CMD ["pnpm", "--filter", "@firecrawl/api", "start:production"]
+# Start the backend in production mode (compile + run)
+CMD ["pnpm", "--filter", "firecrawl-scraper-js", "start:production"]
