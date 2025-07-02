@@ -2,24 +2,23 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files from the actual location
+# Copy only package files first for efficient caching
 COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
 
-# Install pnpm locally
-RUN npm install pnpm@latest
+# Install specific pnpm version matching your local (pinning to 10.12.4 here)
+RUN npm install -g pnpm@10.12.4
 
-# Install dependencies including devDependencies
-RUN npx pnpm install --frozen-lockfile
+# Install dependencies using frozen lockfile (lockfile must match pnpm version)
+RUN pnpm install --frozen-lockfile
 
-# Copy all source code
+# Copy rest of the source code
 COPY . .
 
 # Build backend inside apps/api
 WORKDIR /app/apps/api
-RUN npx pnpm run build
+RUN pnpm run build
 
 ENV PORT=3002
 EXPOSE 3002
 
-CMD ["npx", "pnpm", "run", "start:production"]
-# Trigger fresh build - updated at YYYY-MM-DD
+CMD ["pnpm", "run", "start:production"]
