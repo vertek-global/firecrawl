@@ -1,21 +1,24 @@
-# Use official Node.js image
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package files and install dependencies
-COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
+# Install pnpm globally
 RUN npm install -g pnpm
+
+# Copy only package files needed for install
+COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
+
+# Install dependencies only for api
 RUN pnpm install --frozen-lockfile
 
-# Copy the API source code
+# Copy source code
 COPY apps/api ./apps/api
 
-# Build the API
+# Build api project (adjust build script if needed)
 RUN pnpm --filter @firecrawl/api build
 
-# Expose port
+# Expose port 3002
 EXPOSE 3002
 
-# Run the API server (or run workers as needed)
+# Start the api in production mode
 CMD ["pnpm", "--filter", "@firecrawl/api", "start:production"]
