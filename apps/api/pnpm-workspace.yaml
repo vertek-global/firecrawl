@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@sentry/cli'
+  - '@sentry/profiling-node'
+  - koffi
+  - msgpackr-extract
+  - puppeteer
+  - supabase
+  - wordpos
