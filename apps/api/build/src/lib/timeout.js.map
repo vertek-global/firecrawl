@@ -1,0 +1,1 @@
+{"version":3,"file":"timeout.js","sourceRoot":"","sources":["../../../src/lib/timeout.ts"],"names":[],"mappings":";;;AAAa,QAAA,YAAY,GAAG,IAAI,CAAC","sourcesContent":["export const axiosTimeout = 5000;\n"]}

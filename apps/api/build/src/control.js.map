@@ -1,0 +1,1 @@
+{"version":3,"file":"control.js","sourceRoot":"","sources":["../../src/control.ts"],"names":[],"mappings":";;;AAAA,iEAAiE;AACpD,QAAA,WAAW,GAAG,KAAK,CAAC","sourcesContent":["// ! IN CASE OPENAI goes down, then activate the fallback -> true\nexport const is_fallback = false;\n"]}

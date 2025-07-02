@@ -1,0 +1,1 @@
+{"version":3,"file":"strings.js","sourceRoot":"","sources":["../../../src/lib/strings.ts"],"names":[],"mappings":";;;AAAa,QAAA,uBAAuB,GAClC,kIAAkI,CAAC","sourcesContent":["export const BLOCKLISTED_URL_MESSAGE =\n  \"This website is no longer supported, please reach out to help@firecrawl.com for more info on how to activate it on your account.\";\n"]}
