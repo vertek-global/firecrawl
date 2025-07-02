@@ -23,7 +23,7 @@ COPY . .
 WORKDIR /app/apps/api
 RUN pnpm run build
 
-ENV PORT=3002
-EXPOSE 3002
+ENV PORT=8080
+EXPOSE 8080
 
 CMD ["pnpm", "run", "start:production"]
