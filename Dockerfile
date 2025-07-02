@@ -1,21 +1,22 @@
 FROM node:20-alpine
 
-# Global setup
-WORKDIR /app
-COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
-RUN npm install -g pnpm@10.12.4
-
-# Set working directory to actual app location
+# Set working directory to app subfolder
 WORKDIR /app/apps/api
 
-# Install dependencies in the correct context
+# Copy only package.json and lockfile for caching install
+COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
+
+# Install pnpm globally (and match local version)
+RUN npm install -g pnpm@10.12.4
+
+# Install dependencies inside the right folder
 RUN pnpm install
 
-# Copy all source code AFTER install to cache dependencies
+# Go back and copy full source code
 WORKDIR /app
 COPY . .
 
-# Back to app dir for build
+# Build your app
 WORKDIR /app/apps/api
 RUN pnpm run build
 
