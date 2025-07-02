@@ -22,3 +22,4 @@ ENV PORT=3002
 EXPOSE 3002
 
 CMD ["npx", "pnpm", "run", "start:production"]
+# Trigger fresh build - updated at YYYY-MM-DD
