@@ -19,11 +19,13 @@ RUN pnpm install
 WORKDIR /app
 COPY . .
 
-# Build the app
+# Build the app (output goes to dist/src as per the tsconfig.json)
 WORKDIR /app/apps/api
 RUN pnpm run build
 
+# Set the port for the application
 ENV PORT=8080
 EXPOSE 8080
 
+# Start the application (make sure to start from the 'dist' folder)
 CMD ["pnpm", "run", "start:production"]

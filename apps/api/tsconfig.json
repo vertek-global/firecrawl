@@ -6,7 +6,7 @@
     "module": "NodeNext",
     "esModuleInterop": true,
     "sourceMap": true,
-    "outDir": "./build/src",
+    "outDir": "./dist/src",
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "strictNullChecks": true,
