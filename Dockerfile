@@ -9,7 +9,7 @@ COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
 RUN npm install pnpm@latest
 
 # Install dependencies including devDependencies
-RUN npx pnpm install --frozen-lockfile --include-dev
+RUN npx pnpm install --frozen-lockfile
 
 # Copy all source code
 COPY . .
