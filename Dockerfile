@@ -2,19 +2,19 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files first
-COPY pnpm-lock.yaml package.json pnpm-workspace.yaml* ./
+# Copy package files from the actual location
+COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
 
 # Install pnpm locally
 RUN npm install pnpm@latest
 
-# Install all dependencies including devDependencies
+# Install dependencies including devDependencies
 RUN npx pnpm install --frozen-lockfile --include-dev
 
 # Copy all source code
 COPY . .
 
-# Build the backend inside apps/api
+# Build backend inside apps/api
 WORKDIR /app/apps/api
 RUN npx pnpm run build
 
