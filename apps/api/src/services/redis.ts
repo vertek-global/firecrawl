@@ -72,4 +72,4 @@ const deleteKey = async (key: string) => {
 export { setValue, getValue, deleteKey };
 
 const redisEvictURL = process.env.REDIS_EVICT_URL ?? process.env.REDIS_RATE_LIMIT_URL;
-export const redisEvictConnection = new IORedis(redisEvictURL!);
+export const redisEvictConnection = new IORedis(redisEvictURL!, { family: 0 });

@@ -16,6 +16,7 @@ let billingQueue: Queue;
 console.log("!!! RAILWAY DEBUG: Reading process.env.REDIS_URL. The value is: ", process.env.REDIS_URL, "!!!");
 export const redisConnection = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
+  family: 0,
 });
 redisConnection.ping((err, result) => {
   if (err) {

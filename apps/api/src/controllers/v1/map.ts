@@ -26,7 +26,7 @@ import Redis from "ioredis";
 import { generateURLSplits, queryIndexAtDomainSplitLevel, queryIndexAtSplitLevel } from "../../services/index";
 
 configDotenv();
-const redis = new Redis(process.env.REDIS_URL!);
+const redis = new Redis(process.env.REDIS_URL!, { family: 0 });
 
 // Max Links that /map can return
 const MAX_MAP_LIMIT = 30000;
