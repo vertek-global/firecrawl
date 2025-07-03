@@ -7,11 +7,15 @@ RUN corepack enable
 COPY . /app
 WORKDIR /app
 
+# --- FIX START ---
+# Changed the cache mount 'id' from 'pnpm' to a more specific name
+# to comply with Railway's build environment.
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=firecrawl-pnpm-cache,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install && pnpm run build
+RUN --mount=type=cache,id=firecrawl-pnpm-cache,target=/pnpm/store pnpm install && pnpm run build
+# --- FIX END ---
 
 # Install Go
 FROM golang:1.24 AS go-base
