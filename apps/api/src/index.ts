@@ -127,12 +127,16 @@ attachWsProxy(app);
 
 // Graceful shutdown
 const DEFAULT_PORT = process.env.PORT ?? 3002;
-const HOST = process.env.HOST ?? "localhost";
+// --- FIX START ---
+// const HOST = process.env.HOST ?? "localhost"; // <-- THIS LINE WAS THE PROBLEM. It forces the app to listen on localhost, rejecting external traffic from Railway's router.
 
 function startServer(port = DEFAULT_PORT) {
-  const server = app.listen(Number(port), HOST, () => {
+  // By removing the `HOST` argument, Node.js defaults to `0.0.0.0`, which
+  // listens on all available network interfaces. This is what you want in a container.
+  const server = app.listen(Number(port), () => {
     logger.info(`Worker ${process.pid} listening on port ${port}`);
   });
+  // --- FIX END ---
 
   const exitHandler = async () => {
     logger.info("SIGTERM received. Closing server...");
