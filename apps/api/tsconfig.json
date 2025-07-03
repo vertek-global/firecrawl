@@ -4,21 +4,13 @@
     "lib": ["ES2022", "DOM"],
     "target": "ES2022",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist/src",
     "esModuleInterop": true,
     "sourceMap": true,
-    "outDir": "./dist/src",
-    "moduleResolution": "NodeNext",
+    "inlineSources": true,
     "baseUrl": ".",
-    "strictNullChecks": true,
-    "inlineSources": true
+    "strictNullChecks": true
   },
-  "include": [
-    "src/",
-    "src/**/*",
-    "services/db/supabase.ts",
-    "utils/utils.ts",
-    "services/db/supabaseEmbeddings.ts",
-    "utils/EventEmmitter.ts",
-    "src/services/queue-service.ts"
-  ]
+  "include": ["src/**/*"]
 }

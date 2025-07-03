@@ -3,7 +3,7 @@ FROM node:20-alpine
 # Set working directory to app subfolder
 WORKDIR /app/apps/api
 
-# Copy only package files
+# Copy only package files to install dependencies
 COPY apps/api/package.json apps/api/pnpm-lock.yaml ./
 
 # Install global pnpm
@@ -12,20 +12,22 @@ RUN npm install -g pnpm@10.12.4
 # Set production mode to skip devDependencies
 ENV NODE_ENV=production
 
-# Install dependencies (devDependencies skipped)
+# Install production dependencies
 RUN pnpm install
 
-# Go back and copy full source
+# Go back and copy full source code
 WORKDIR /app
 COPY . .
 
-# Build the app (output goes to dist/src as per the tsconfig.json)
+# Set back to API app dir
 WORKDIR /app/apps/api
+
+# Build the app (TypeScript -> JavaScript in /dist/src)
 RUN pnpm run build
 
-# Set the port for the application
+# Expose the desired port
 ENV PORT=8080
 EXPOSE 8080
 
-# Start the application (make sure to start from the 'dist' folder)
+# Start the app using the production script
 CMD ["pnpm", "run", "start:production"]
