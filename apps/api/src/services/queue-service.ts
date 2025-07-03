@@ -14,11 +14,17 @@ let billingQueue: Queue;
 
 // --- START OF RAILWAY DEBUG ---
 console.log("!!! RAILWAY DEBUG: Reading process.env.REDIS_URL. The value is: ", process.env.REDIS_URL, "!!!");
-// --- END OF RAILWAY DEBUG ---
-
 export const redisConnection = new IORedis(process.env.REDIS_URL!, {
   maxRetriesPerRequest: null,
 });
+redisConnection.ping((err, result) => {
+  if (err) {
+    console.error("!!! RAILWAY DEBUG: Redis Ping Error:", err);
+  } else {
+    console.log("!!! RAILWAY DEBUG: Redis Ping Result:", result);
+  }
+});
+// --- END OF RAILWAY DEBUG ---
 
 export const scrapeQueueName = "{scrapeQueue}";
 export const extractQueueName = "{extractQueue}";
